@@ -59,7 +59,7 @@ def featureFormat( dictionary, features, remove_NaN=True, remove_all_zeroes=True
     elif sort_keys:
         keys = sorted(dictionary.keys())
     else:
-        keys = dictionary.keys()
+        keys = list(dictionary.keys())
 
     for key in keys:
         tmp_list = []
@@ -67,7 +67,7 @@ def featureFormat( dictionary, features, remove_NaN=True, remove_all_zeroes=True
             try:
                 dictionary[key][feature]
             except KeyError:
-                print "error: key ", feature, " not present"
+                print("error: key ", feature, " not present")
                 return
             value = dictionary[key][feature]
             if value=="NaN" and remove_NaN:
@@ -114,7 +114,7 @@ def targetFeatureSplit( data ):
         (sklearn can generally handle both lists and numpy arrays as 
         input formats when training/predicting)
     """
-
+    
     target = []
     features = []
     for item in data:
