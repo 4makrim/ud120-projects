@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-def outlierCleaner(predictions, ages, net_worths):
+def outlierCleaner(predictions, feature, target):
     """
         Clean away the 10% of points that have the largest
         residual errors (difference between the prediction

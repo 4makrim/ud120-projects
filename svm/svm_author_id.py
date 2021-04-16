@@ -20,7 +20,7 @@ from email_preprocess import preprocess
 features_train, features_test, labels_train, labels_test = preprocess()
 
 ### Train with a smaller data set to check the difference in accuracy.
-### Had to convert the value to int to resolve a runtime error.
+### Had to conver the value to int to resolve a runtime error.
 features_train = features_train[:int(len(features_train)/100)] 
 labels_train = labels_train[:int(len(labels_train)/100)]
 
