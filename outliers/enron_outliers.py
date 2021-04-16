@@ -18,12 +18,12 @@ data = featureFormat(data_dict, features)
 for name, value in data_dict.items():
     deets = value
     for k, v in deets.items():
-        if k == 'salary':
-            if float(v) > 1000000:
-                print (name)
-        # if k == 'bonus':
-        #     if float(v) > 5000000:
-        #         print(name)
+        # if k == 'salary':
+        #     if float(v) > 1000000:
+        #         print (name)
+        if k == 'bonus':
+            if float(v) > 5000000:
+                print(name)
 
 ### your code below
 for point in data:
