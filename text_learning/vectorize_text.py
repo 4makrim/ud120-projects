@@ -23,8 +23,8 @@ from parse_out_email_text import parseOutText
 """
 
 
-from_sara  = open("from_sara.txt", "r")
-from_chris = open("from_chris.txt", "r")
+from_sara  = open("from_sara.txt", "rb")
+from_chris = open("from_chris.txt", "rb")
 
 from_data = []
 word_data = []
@@ -42,34 +42,50 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
         temp_counter += 1
-        if temp_counter < 200:
-            path = os.path.join('..', path[:-1])
-            print(path)
-            email = open(path, "r")
+        #if temp_counter < 200:
+        path = os.path.join('..', path[:-1].decode('utf-8'))
+        #print(path)
+        email = open(path, "r")
+        #print(email)
+        
+        ### use parseOutText to extract the text from the opened email
+        text = parseOutText(email)
+        #print(text)
+            
+        rem_words = ["sara", "shackleton", "chris", "germani"]
+        for word in rem_words:
+            text = text.replace(word, '')
 
-            ### use parseOutText to extract the text from the opened email
-
-            ### use str.replace() to remove any instances of the words
-            ### ["sara", "shackleton", "chris", "germani"]
-
-            ### append the text to word_data
-
-            ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
-
-            email.close()
+        ### append the text to word_data
+        word_data.append(text)
+        ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+        if name == 'sara':
+            from_data.append(0)
+        elif name == 'chris':
+            from_data.append(1)
+            
+        print(temp_counter, ' :: ', text)
+        email.close()
 
 print("emails processed")
 from_sara.close()
 from_chris.close()
 
-pickle.dump( word_data, open("your_word_data.pkl", "w") )
-pickle.dump( from_data, open("your_email_authors.pkl", "w") )
-
-
-
-
+pickle.dump( word_data, open("your_word_data.pkl", "wb") )
+pickle.dump( from_data, open("your_email_authors.pkl", "wb") )
 
 ### in Part 4, do TfIdf vectorization here
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(input=word_data, stop_words='english')
+X = vectorizer.fit_transform(word_data)
+print(len(vectorizer.get_feature_names()))
+
+### What is word 34597 in TfIdf that you just made?
+print(vectorizer.get_feature_names()[34597])
+
+### References
+### Snowball stemmer - http://www.nltk.org/howto/stem.html
+### Download nltk - https://stackoverflow.com/questions/5843817/programmatically-install-nltk-corpora-models-i-e-without-the-gui-downloader
+### https://www.freecodecamp.org/news/how-to-extract-keywords-from-text-with-tf-idf-and-pythons-scikit-learn-b2a0f3d7e667/
 
 
