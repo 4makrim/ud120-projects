@@ -52,7 +52,20 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         text = parseOutText(email)
         #print(text)
             
-        rem_words = ["sara", "shackleton", "chris", "germani"]
+        ### sshacklensf is a word we identified as an outlier from Lesson 12
+        ### we came back and added it to the list of words to be removed.
+        ### next one is cgermannsf with importance 0.666
+        ### next one is sshacklsims1rcsntxswbellnet with importance 0.666
+        ### next one is sshacklsimsmsdaemon with importance of 0.667
+        ### next one is sshacklswbellcom with importance of 0.667
+        ### sshacklswbellnet
+        
+        ### According to Katie there is just one more word after running 
+        ### vectorize_text and find_signature twice.
+        ### that word is "houectect"
+        ### I don't see that. 
+        rem_words = ["sara", "shackleton", "chris", "germani", "sshacklensf",
+                     "cgermannsf"]
         for word in rem_words:
             text = text.replace(word, '')
 
