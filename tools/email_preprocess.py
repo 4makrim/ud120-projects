@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 import pickle
-import pickle
-import numpy
 
 from sklearn import model_selection
 
