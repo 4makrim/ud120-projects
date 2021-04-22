@@ -26,12 +26,24 @@ def classify(features_train, labels_train, features_test, labels_test):
     pred = clf.predict(features_test)
     print("prediction time:", round(time()-t1, 3) , "s")
     
+    ### count number of positive predictions
+    count = 0
+    for i in pred:
+        if i == 1:
+            count += 1
+    print(count)
+    
+    from sklearn.metrics import precision_score, recall_score
+    
+    print("Precision score: ", precision_score(labels_test, pred))
+    print("Recall score: ", recall_score(labels_test, pred))
+    
     ### print accuracy
-    from sklearn.metrics import accuracy_score
-    print("Accuracy: ", accuracy_score(pred, labels_test))
+    # from sklearn.metrics import accuracy_score
+    # print("Accuracy: ", accuracy_score(pred, labels_test))
     
     ### Alternate method
-    #print (clf.score(features_test, labels_test))
+    print ("Accuracy: ", clf.score(features_test, labels_test))
     #########################################################
     
     
