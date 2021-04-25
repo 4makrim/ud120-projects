@@ -24,21 +24,22 @@ sal_count = 0
 email_count = 0
 total_payout_count = 0
 poi_nopayment_count = 0
+poi_payment_count = 0
 
 for name, value in enron_data.items():
 
 
     peds = value
+    if (peds['poi'] == 1 and not math.isnan(float(peds['total_payments']))):
+        count += 1
+        poi_nopayment_count += 1
+    elif(peds['poi'] == 1):
+        count += 1
+        
+    #print("peds: ", peds['total_payments'])
     for key, value in peds.items():
-        if key == "poi":
-            if value == 1:
-                count += 1
-                print("**POI**: ", name)
-                if key == 'total_payments':
-                    if math.isnan(float(value)):
-                        poi_nopayment_count += 1
                 
-        elif key == "salary":
+        if key == "salary":
             if math.isnan(float(value)):
                 # do nothing
                 sal_count += 0
@@ -46,7 +47,7 @@ for name, value in enron_data.items():
                 sal_count += 1
         elif key == 'email_address':
             if value  and value != 'NaN' and not value.isspace():
-                print (name, " ", value)
+                #print (name, " ", value)
                 email_count += 1
         elif key == 'total_payments':
             if math.isnan(float(value)):
@@ -55,8 +56,22 @@ for name, value in enron_data.items():
 
                 
                 
-print("===========\nTotal: ", count, "\n===========")
-print("===========\nSalary Count: ", sal_count, "\n===========")
-print("===========\nEmail Count: ", email_count, "\n===========")
-print(total_payout_count/146)
-print("Percentage of POIs that have no total payments: ", poi_nopayment_count/count)
+print("====================\nSalary Count: ", sal_count, 
+      "\n==================== ")
+print("====================\nEmail Count: ", email_count, 
+      "\n==================== ")
+print("====================\nHow many people received a total payout? : ", 
+      total_payout_count, "\n==================== ")
+print("====================\nTotal no. of POI: ", count, 
+      "\n==================== ")
+print("====================\nPercentage of people who received payout: ", 
+      total_payout_count/len(enron_data), 
+      "\n==================== ")
+
+### Every one of the POIs received total payments of some amount. 
+### confirmed by the result of the following line.
+print("Percentage of POIs that have received total payments: ", 
+          poi_payment_count/count)
+print("Percentage of POIs that have no total payments: ", 
+          poi_nopayment_count/count)
+

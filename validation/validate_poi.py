@@ -12,3 +12,5 @@
 from evaluate_poi_identifier import evaluatePOIidentifier
 evaluatePOIidentifier()
 
+predictions = [0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1]
+labels = [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0]

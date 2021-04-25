@@ -8,10 +8,11 @@ import sys
 from time import time
 
 # This functionwas was called NBAccuracy in starter code. 
-def classify(features_train, labels_train, features_test, labels_test):
+def classifyNB(features_train, labels_train, features_test, labels_test):
     """ compute the accuracy of your Naive Bayes classifier """
+    
+    print("*** Classifier Gaussian Naive Bayes ***")
     ### import the sklearn module for GaussianNB
-    print("*** Classifier AdaBoost ***")
     from sklearn.naive_bayes import GaussianNB
     ### create classifier
     clf = GaussianNB()
@@ -30,8 +31,8 @@ def classify(features_train, labels_train, features_test, labels_test):
     ### this is slightly different than the example, 
     ### where we just print the accuracy
     ### you might need to import an sklearn module
-    accuracy = clf.score(features_test, labels_test)
-    
+    acc = clf.score(features_test, labels_test)
+    print("Naive Bayes Accuracy: ", acc)
     ### Why does it say return accuracy when the caller is expecting a clf?
     return clf
 

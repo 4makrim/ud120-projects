@@ -49,6 +49,7 @@ data_dict.pop("TOTAL", 0)
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 feature_3 = "total_payments"
+feature_4 = "deferred_income"
 poi  = "poi"
 #features_list = [poi, feature_1, feature_2, feature_3]
 features_list = [poi, feature_1, feature_2]
@@ -59,7 +60,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 ### Katie says in her video 10.11 that we need to use floats
 ### This code works as is.
-### Added an additional item into the finance_features to answer a question on Lesson 10 exercise.
+### Added an additional item into the finance_features to answer 
+### a question on Lesson 10 exercise.
 finance_features.append([200000,1000000])
 scalar = MinMaxScaler()
 primed_features = scalar.fit_transform(finance_features)
@@ -69,7 +71,7 @@ primed_features = scalar.fit_transform(finance_features)
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
-### (as it's currently written, the line below assumes 2 features)
+### after experimenting with upto 4 features, narrowed down to two.
 # for f1, f2, f3 in finance_features:
 #     plt.scatter( f1, f2, f3 )
 # plt.show()
@@ -88,6 +90,8 @@ pred = kmeans.predict(finance_features)
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, primed_features, poi, mark_poi=False, name="clusterspred1.pdf", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, primed_features, poi, mark_poi=False, 
+         name="salaryvexercisedoptions.pdf", 
+         f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print("no predictions object named pred found, no clusters to plot")

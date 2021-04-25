@@ -22,8 +22,8 @@ def featureScaling(arr):
     return None
 
 # tests of your feature scaler--line below is input data
-data = [115, 140, 175]
-print (featureScaling(data))
+data = [115, 160, 175, 165]
+print ("Feature Scaling: ", featureScaling(data))
 
 
 from sklearn.preprocessing import MinMaxScaler
@@ -31,7 +31,7 @@ import numpy as np
 
 ### Katie says in her video 10.11 that we need to use floats
 ### This code works as is.
-weights = np.array([[115],[140],[175]])
+weights = np.array([[115],[160],[175],[165]])
 scalar = MinMaxScaler()
 rescaled_weight = scalar.fit_transform(weights)
 print(rescaled_weight)
