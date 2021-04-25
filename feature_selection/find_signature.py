@@ -65,7 +65,7 @@ for i in output:
 
 ### What is the word that is causing the most discrimination? 
 for i in output:
-    print("featue:",vectorizer.get_feature_names()[i])
+    print("feature:",vectorizer.get_feature_names()[i])
 
 from sklearn.feature_selection import SelectPercentile, f_classif
 selector = SelectPercentile(f_classif, percentile=10)

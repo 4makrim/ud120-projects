@@ -4,6 +4,10 @@ import sys
 import pickle
 sys.path.append("../tools/")
 
+from time import time
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
 
@@ -74,13 +78,36 @@ from classifyAdaBoost import classifyAdaBoost
 clf = classifyAdaBoost(features_train, labels_train, features_test, 
                        labels_test)
 
+### One last algorithm to test - SVM 
 ### SVM seems to have the best accuracy at 0.689. We will use this algorithm.
 from classifySVM import classifySVM
 clf = classifySVM(features_train, labels_train, 
                                     features_test, labels_test)
 # getMetrics(clf, features_test, labels_test)
 
-### One last algorithm to test - SVM 
+#########################################################################
+# Train a SVM classification model
+
+print("Fitting the classifier to the training set")
+
+t0 = time()
+param_grid = {
+         'C': [300,400],
+          'gamma': [10],
+          }
+# for sklearn version 0.16 or prior, the class_weight parameter value is 'auto'
+clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid)
+clf = clf.fit(features_train, labels_train)
+print("done in %0.3fs" % (time() - t0))
+print("Best estimator found by grid search:")
+print(clf.best_estimator_)
+
+### Even though SVM seemed to be the best in terms of accuracy, it was not 
+### able to predict data points. The precision and recall for SVM were 0.
+
+
+##########################################################################
+
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
@@ -93,6 +120,15 @@ print("**** Final Classifier Algorithm Chosen: Regular Decision Tree *****")
 from evaluate_poi_identifier import evaluatePOIidentifier
 clf = evaluatePOIidentifier()
 
+### Determine the importance of the features that we chose. 
+### salary and bonus seem to be the highest.
+lat = [i for i in clf.feature_importances_]
+def condition(x): return x > 0.2
+output = [idx for idx, element in enumerate(lat) if condition(element)]
+print("output:", output)
+for i in output:
+    print("importance:",lat[i])
+    
 #getMetrics(clf, features_test, labels_test)
 ### above line is showing 1.0 for the metrics. This may have something to do 
 ### with the sort_keys not working in this file.
