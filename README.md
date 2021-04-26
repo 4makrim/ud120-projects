@@ -39,6 +39,7 @@ final_project/my_classifier.pkl
 final_project/my_dataset.pkl
 final_project/my_feature_list.pkl
 final_project/newDataPoint.py
+final_project/pca_fit.py
 final_project/poi_email_addresses.py
 final_project/poi_id.py
 final_project/poi_names.txt
