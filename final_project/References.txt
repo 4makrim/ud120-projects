@@ -1,5 +1,9 @@
 References:
+1. Project information provided used for project overview and summary.
+2. Video exercises and notes provided in the C753-Machine Learning course.
+3. Importance of Feature Scaling from feedback and [link](https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html)
 N/A
+
 I hereby confirm that this submission is my work. 
 I have cited above the origins of any parts of the submission that were taken 
 from Websites, books, forums, blog posts, github repositories, etc.

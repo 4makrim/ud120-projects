@@ -35,16 +35,16 @@ def classifyDT(features_train, labels_train, features_test, labels_test):
     #print("classifyDT:", pred)
     import numpy as np
     from sklearn.metrics import precision_score, recall_score, f1_score
-    print ("F1 Score: ", f1_score(labels_test, pred, labels=np.unique(pred)))
-    print("Precision score: ", precision_score(labels_test, pred))
-    print("Recall score: ", recall_score(labels_test, pred))
+    print ("F1 Score: ", round(f1_score(labels_test, pred, labels=np.unique(pred)),3))
+    print("Precision score: ", round(precision_score(labels_test, pred), 3))
+    print("Recall score: ", round(recall_score(labels_test, pred), 3))
     
     ### print accuracy
     # from sklearn.metrics import accuracy_score
     # print("Accuracy: ", accuracy_score(pred, labels_test))
     
     ### Alternate method
-    print ("Decision Tree Classifier Accuracy: ", clf.score(features_test, labels_test))
+    print ("Decision Tree Classifier Accuracy: ", round(clf.score(features_test, labels_test),3))
     #########################################################
     
     

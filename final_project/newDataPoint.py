@@ -8,6 +8,13 @@ Created on Sun Apr 18 23:27:16 2021
 import math
 import pickle
 from get_data import getData
+from classifyDT import classifyDT
+import sys
+
+sys.path.append("../tools/")
+
+def submitDict():
+    return submit_dict
 
 def computeFraction( poi_messages, all_messages ):
     """ given a number messages to/from POI (numerator) 
@@ -34,45 +41,55 @@ def computeFraction( poi_messages, all_messages ):
     return fraction
 
 
+def createNewPoints(data_dict):
+    submit_dict = {}
+    for name in data_dict:
+    
+        data_point = data_dict[name]
+    
+        #print
+        from_poi_to_this_person = data_point["from_poi_to_this_person"]
+        to_messages = data_point["to_messages"]
+        fraction_from_poi = computeFraction( from_poi_to_this_person, to_messages )
+        
+        data_point["fraction_from_poi"] = fraction_from_poi
+    
+    
+        from_this_person_to_poi = data_point["from_this_person_to_poi"]
+        from_messages = data_point["from_messages"]
+        fraction_to_poi = computeFraction( from_this_person_to_poi, from_messages )
+        #print (name, "msgs sent: ", 
+        #           fraction_from_poi, " msgs received", 
+        #               fraction_to_poi)
+        submit_dict[name]={"from_poi_to_this_person":fraction_from_poi,
+                           "from_this_person_to_poi":fraction_to_poi}
+        data_point["fraction_to_poi"] = fraction_to_poi
+    return submit_dict
+
+def plotNewFeatures(submit_dict):
+    ''' Plot the new features to determine if there is a significant impact '''
+    ### draw the scatterplot, with color-coded training and testing points
+    import matplotlib.pyplot
+    from feature_format import featureFormat
+    features = ["from_poi_to_this_person", "from_this_person_to_poi"]
+    data = featureFormat(submit_dict, features)
+    for point in data:
+        from_poi_to_this_person = point[0]
+        from_this_person_to_poi = point[1]
+        matplotlib.pyplot.scatter( from_poi_to_this_person, from_this_person_to_poi )
+    
+    matplotlib.pyplot.xlabel("from_poi_to_this_person")
+    matplotlib.pyplot.ylabel("from_this_person_to_poi")
+    matplotlib.pyplot.show()
+
+    
 data_dict = getData() 
-
-submit_dict = {}
-for name in data_dict:
-
-    data_point = data_dict[name]
-
-    #print
-    from_poi_to_this_person = data_point["from_poi_to_this_person"]
-    to_messages = data_point["to_messages"]
-    fraction_from_poi = computeFraction( from_poi_to_this_person, to_messages )
-    
-    data_point["fraction_from_poi"] = fraction_from_poi
+submit_dict = createNewPoints(data_dict)
+plotNewFeatures(submit_dict)
 
 
-    from_this_person_to_poi = data_point["from_this_person_to_poi"]
-    from_messages = data_point["from_messages"]
-    fraction_to_poi = computeFraction( from_this_person_to_poi, from_messages )
-    print (name, "msgs sent: ", 
-               fraction_from_poi, " msgs received", 
-                   fraction_to_poi)
-    submit_dict[name]={"from_poi_to_this_person":fraction_from_poi,
-                       "from_this_person_to_poi":fraction_to_poi}
-    data_point["fraction_to_poi"] = fraction_to_poi
-    
- 
-### draw the scatterplot, with color-coded training and testing points
-import matplotlib.pyplot
-from feature_format import featureFormat
-features = ["from_poi_to_this_person", "from_this_person_to_poi"]
-data = featureFormat(submit_dict, features)
-for point in data:
-    from_poi_to_this_person = point[0]
-    from_this_person_to_poi = point[1]
-    matplotlib.pyplot.scatter( from_poi_to_this_person, from_this_person_to_poi )
+### Fit with decision tree. 
 
-matplotlib.pyplot.xlabel("from_poi_to_this_person")
-matplotlib.pyplot.ylabel("from_this_person_to_poi")
-matplotlib.pyplot.show()
 # from feature_format import targetFeatureSplit
 # features_list = ["from_poi_to_this_person", "from_this_person_to_poi"]
 # #data = featureFormat( data_point, features_list, remove_any_zeroes=True)
@@ -98,5 +115,4 @@ matplotlib.pyplot.show()
 
 #####################
 
-def submitDict():
-    return submit_dict
+
