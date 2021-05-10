@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['final_project\\poi_id.py', 'final_project\\classifyDT.py', 'final_project\\evaluate_poi_identifier.py', 'tools\\python2_lesson14_keys.pkl', 'tools\\python2_lesson13_keys.pkl', 'tools\\feature_format.py', 'pca\\eigenfaces.py', 'README.md']
+recent_files = ['choose_your_own\\class_vis.py', 'choose_your_own\\your_algorithm.py']
 
